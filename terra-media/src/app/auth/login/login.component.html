@@ -1,0 +1,29 @@
+<div class="login-wrapper">
+  <mat-card class="login-card" role="main" aria-label="Formulário de login">
+    <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
+      <h2>Acesse sua conta</h2>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Usuário</mat-label>
+        <input matInput formControlName="login" id="login" placeholder="Digite seu usuário" autocomplete="login"
+          aria-required="true" />
+        <mat-icon matPrefix>person</mat-icon>
+        <mat-error matErrorMessages></mat-error>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline" class="full-width">
+        <mat-label>Senha</mat-label>
+        <input matInput [type]="hidePassword ? 'password' : 'text'" formControlName="password" id="password"
+          placeholder="Digite sua senha" autocomplete="current-password" aria-required="true" />
+        <button type="button" mat-icon-button matSuffix (click)="hidePassword = !hidePassword">
+          <mat-icon>{{ hidePassword ? 'visibility_off' : 'visibility' }}</mat-icon>
+        </button>
+        <mat-error matErrorMessages></mat-error>
+      </mat-form-field>
+
+      <button mat-flat-button color="primary" class="full-width login-btn" type="submit" [disabled]="form.invalid">
+        Entrar
+      </button>
+    </form>
+  </mat-card>
+</div>
