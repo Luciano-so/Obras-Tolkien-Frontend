@@ -10,6 +10,8 @@ import { MatInputModule } from '@angular/material/input';
 import { BooksService } from '../../services/books.service';
 import { ToastService } from '../../../../shared/toast/toast.service';
 import { OpenLibraryBook } from '../../models/open-library-book';
+import { LoadingService } from '../../../../shared/loading/service/loading.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-book-comments',
@@ -31,6 +33,7 @@ export class BookCommentsComponent implements OnInit {
   private dialog = inject(MatDialog);
   private toastSrv = inject(ToastService);
   private booksService = inject(BooksService);
+  private loadingSrv = inject(LoadingService);
 
   commentForm = this.fb.group({
     comment: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(1000)]],
@@ -47,15 +50,18 @@ export class BookCommentsComponent implements OnInit {
     const coverId = this.book.cover_i;
     if (!coverId) return;
 
-    this.booksService.getBookByCoverId(coverId).subscribe({
-      next: ({ id, comments = [] }) => {
-        this.comments = comments;
-        this.commentForm.get('bookId')?.setValue(id ?? null);
-      },
-      error: () => {
-        this.comments = [];
-      }
-    });
+    this.loadingSrv.show();
+    this.booksService.getBookByCoverId(coverId)
+      .pipe(finalize(() => this.loadingSrv.close()))
+      .subscribe({
+        next: ({ id, comments = [] }) => {
+          this.comments = comments;
+          this.commentForm.get('bookId')?.setValue(id ?? null);
+        },
+        error: () => {
+          this.comments = [];
+        }
+      });
   }
 
   openCommentDetails(comment: any): void {
@@ -80,17 +86,19 @@ export class BookCommentsComponent implements OnInit {
     const bookId = this.commentForm.get('bookId')?.value ?? null;
 
     const commentDto = { comment };
-
-    this.booksService.createOrAddComment(this.book.cover_i!, bookId, commentDto).subscribe({
-      next: () => {
-        this.toastSrv.onShowOk('Comentário adicionado com sucesso.');
-        this.commentForm.get('comment')?.setValue('');
-        this.loadBook();
-      },
-      error: (err) => {
-        const message = err?.error?.message || 'Erro ao salvar comentário';
-        this.toastSrv.onShowError(message);
-      }
-    });
+    this.loadingSrv.show();
+    this.booksService.createOrAddComment(this.book.cover_i!, bookId, commentDto)
+      .pipe(finalize(() => this.loadingSrv.close()))
+      .subscribe({
+        next: () => {
+          this.toastSrv.onShowOk('Comentário adicionado com sucesso.');
+          this.commentForm.get('comment')?.setValue('');
+          this.loadBook();
+        },
+        error: (err) => {
+          const message = err?.error?.message || 'Erro ao salvar comentário';
+          this.toastSrv.onShowError(message);
+        }
+      });
   }
 }

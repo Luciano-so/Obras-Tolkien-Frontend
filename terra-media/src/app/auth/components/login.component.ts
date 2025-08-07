@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 import { AuthService } from '../services/auth.service';
 import { ToastService } from '../../shared/toast/toast.service';
 import { MatErrorMessagesDirective } from '../../shared/directives/matErrorMessagesDirective';
+import { LoadingService } from '../../shared/loading/service/loading.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-login',
@@ -32,6 +34,7 @@ export class LoginComponent {
   private router = inject(Router);
   private authSrv = inject(AuthService);
   private toastSrv = inject(ToastService);
+  private loadingSrv = inject(LoadingService);
 
   form: FormGroup = this.fb.group({
     login: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
@@ -44,15 +47,18 @@ export class LoginComponent {
     if (this.form.invalid) {
       return;
     }
-
-    this.authSrv.login(this.form.value).subscribe({
-      next: (response) => {
-        this.toastSrv.onShowOk(response.message);
-        this.router.navigate(['/home']);
-      },
-      error: (err) => {
-        this.toastSrv.onShowError(err.error.message);
-      }
-    });
+    
+    this.loadingSrv.show();
+    this.authSrv.login(this.form.value)
+      .pipe(finalize(() => this.loadingSrv.close()))
+      .subscribe({
+        next: (response) => {
+          this.toastSrv.onShowOk(response.message);
+          this.router.navigate(['/home']);
+        },
+        error: (err) => {
+          this.toastSrv.onShowError(err.error.message);
+        }
+      });
   }
 }

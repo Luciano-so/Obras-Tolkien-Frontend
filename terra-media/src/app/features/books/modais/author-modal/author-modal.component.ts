@@ -4,6 +4,8 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/materia
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatIconModule } from '@angular/material/icon';
 import { OpenLibraryService } from '../../services/open-library.service';
+import { LoadingService } from '../../../../shared/loading/service/loading.service';
+import { finalize } from 'rxjs';
 
 @Component({
   selector: 'app-authors-modal',
@@ -15,17 +17,19 @@ import { OpenLibraryService } from '../../services/open-library.service';
 export class AuthorsModalComponent implements OnInit {
   private openLibrarySrv = inject(OpenLibraryService);
   authorIds: string[] = inject(MAT_DIALOG_DATA);
-
+  private loadingSrv = inject(LoadingService);
   private dialogRef = inject(MatDialogRef<AuthorsModalComponent>);
 
   authors: any[] = [];
 
   ngOnInit(): void {
     this.authorIds.forEach(authorId => {
-      this.openLibrarySrv.getAuthorBio(authorId).subscribe(response => {
-        const authorWithId = { ...response, authorId };
-        this.authors.push(authorWithId);
-      });
+      this.openLibrarySrv.getAuthorBio(authorId)
+        .pipe(finalize(() => this.loadingSrv.close()))
+        .subscribe(response => {
+          const authorWithId = { ...response, authorId };
+          this.authors.push(authorWithId);
+        });
     });
   }
 

@@ -4,7 +4,6 @@ import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angula
 
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { MatPaginator, MatPaginatorModule, PageEvent } from '@angular/material/paginator';
-import { MatSort, MatSortModule, Sort } from '@angular/material/sort';
 
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -14,12 +13,12 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { OpenLibraryBook } from '../../models/open-library-book';
-import { debounceTime, distinctUntilChanged } from 'rxjs';
+import { debounceTime, distinctUntilChanged, finalize } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthorsModalComponent } from '../../modais/author-modal/author-modal.component';
 import { BookModalComponent } from '../../modais/book-modal/book-modal.component';
 import { OpenLibraryService } from '../../services/open-library.service';
-
+import { LoadingService } from '../../../../shared/loading/service/loading.service';
 
 @Component({
   selector: 'app-books-list',
@@ -32,7 +31,6 @@ import { OpenLibraryService } from '../../services/open-library.service';
     MatSelectModule,
     MatTableModule,
     MatPaginatorModule,
-    MatSortModule,
     MatButtonModule,
     MatCardModule,
     MatIconModule,
@@ -48,20 +46,18 @@ export class BooksListComponent implements OnInit {
   totalItems = 0;
   pageSize = 10;
   currentPage = 1;
-  currentSort: Sort = { active: 'title', direction: 'asc' };
   currentFilter = '';
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
-  @ViewChild(MatSort) sort!: MatSort;
 
   private fb = inject(FormBuilder);
   private dialog = inject(MatDialog);
+  private loadingSrv = inject(LoadingService);
   private openLibrarySrv = inject(OpenLibraryService);
 
   ngOnInit() {
     this.form = this.fb.group({
-      search: ['Tolkien', Validators.required],
-      sort: ['title']
+      search: ['Tolkien', Validators.required]
     });
     this.form.get('search')?.valueChanges.pipe(
       debounceTime(500),
@@ -83,16 +79,18 @@ export class BooksListComponent implements OnInit {
       }
       return;
     }
-
+    this.loadingSrv.show();
     const search = this.form.get('search')?.value.trim();
-    this.openLibrarySrv.searchBooks(search, this.currentPage, this.pageSize).subscribe(result => {
-      this.dataSource.data = result.docs;
-      this.totalItems = result.numFound;
-      if (this.paginator) {
-        this.paginator.length = this.totalItems;
-        this.paginator.pageIndex = this.currentPage - 1;
-      }
-    });
+    this.openLibrarySrv.searchBooks(search, this.currentPage, this.pageSize)
+      .pipe(finalize(() => this.loadingSrv.close()))
+      .subscribe(result => {
+        this.dataSource.data = result.docs;
+        this.totalItems = result.numFound;
+        if (this.paginator) {
+          this.paginator.length = this.totalItems;
+          this.paginator.pageIndex = this.currentPage - 1;
+        }
+      });
   }
 
   onAuthorPropertiesClick(authorKeys: string[]) {

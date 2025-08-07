@@ -56,10 +56,10 @@ ng test --code-coverage
 
 ```
 =============================== Coverage summary ===============================
-Statements   : 91.98% ( 241/262 )
-Branches     : 79.68% ( 51/64 )
-Functions    : 94.73% ( 72/76 )
-Lines        : 91.39% ( 223/244 )
+Statements   : 91.85% ( 282/307 )
+Branches     : 80% ( 52/65 )
+Functions    : 91.57% ( 87/95 )
+Lines        : 91.28% ( 262/287 )
 ================================================================================
 ```
 
@@ -94,6 +94,7 @@ Acesse: [http://localhost:4200](http://localhost:4200)
 ## 💡 Funcionalidades Bônus
 
 - ✅ **Diálogo de Confirmação Reutilizável**
+- ✅ **Loading**
 - ✅ **Toast de Notificações**
 - ✅ **Componentização Modular** (modais independentes)
 - ✅ **Testes Automatizados** com ampla cobertura
@@ -110,4 +111,3 @@ Acesse: [http://localhost:4200](http://localhost:4200)
 
 - Cadastro e remoção de usuários
 - Implementação de **refresh token**
-- Melhorias no **carregamento (loading)**

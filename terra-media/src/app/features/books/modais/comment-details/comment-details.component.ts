@@ -9,6 +9,8 @@ import { ToastService } from '../../../../shared/toast/toast.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmDialogService } from '../../../../shared/confirm-dialog/confirm-dialog.service';
 import { MatErrorMessagesDirective } from '../../../../shared/directives/matErrorMessagesDirective';
+import { LoadingService } from '../../../../shared/loading/service/loading.service';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-comment-details',
@@ -30,6 +32,7 @@ export class CommentDetailsComponent implements OnInit {
 
   private booksService = inject(BooksService);
   private toastService = inject(ToastService);
+  private loadingSrv = inject(LoadingService);
   private confirmDialog = inject(ConfirmDialogService);
 
   constructor(
@@ -57,16 +60,18 @@ export class CommentDetailsComponent implements OnInit {
     }
 
     const updatedComment = this.form.value.comment.trim();
-
-    this.booksService.updateComment(this.data.comment.bookId, this.data.comment.id, { comment: updatedComment }).subscribe({
-      next: () => {
-        this.toastService.onShowOk('Comentário atualizado com sucesso.');
-        this.close(true);
-      },
-      error: (err) => {
-        this.toastService.onShowError('Erro ao atualizar comentário');
-      }
-    });
+    this.loadingSrv.show();
+    this.booksService.updateComment(this.data.comment.bookId, this.data.comment.id, { comment: updatedComment })
+      .pipe(finalize(() => this.loadingSrv.close()))
+      .subscribe({
+        next: () => {
+          this.toastService.onShowOk('Comentário atualizado com sucesso.');
+          this.close(true);
+        },
+        error: (err) => {
+          this.toastService.onShowError('Erro ao atualizar comentário');
+        }
+      });
   }
 
   delete(): void {
@@ -78,16 +83,19 @@ export class CommentDetailsComponent implements OnInit {
       color: 'warn'
     }).subscribe((result) => {
       if (result) {
-        this.booksService.removeComment(this.data.comment.bookId, this.data.comment.id).subscribe({
-          next: () => {
-            this.toastService.onShowOk('Comentário removido com sucesso.');
-            this.close(true);
-          },
-          error: (err) => {
-            const msg = err?.error?.message || 'Erro ao remover comentário';
-            this.toastService.onShowError(msg);
-          }
-        });
+        this.loadingSrv.show();
+        this.booksService.removeComment(this.data.comment.bookId, this.data.comment.id)
+          .pipe(finalize(() => this.loadingSrv.close()))
+          .subscribe({
+            next: () => {
+              this.toastService.onShowOk('Comentário removido com sucesso.');
+              this.close(true);
+            },
+            error: (err) => {
+              const msg = err?.error?.message || 'Erro ao remover comentário';
+              this.toastService.onShowError(msg);
+            }
+          });
       }
     });
   }
