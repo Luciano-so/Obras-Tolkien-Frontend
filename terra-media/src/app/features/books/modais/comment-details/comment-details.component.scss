@@ -32,6 +32,8 @@
 
 .comment-details-content {
   margin-bottom: 1.5rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .comment-details-text {

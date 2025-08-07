@@ -7,6 +7,6 @@ export interface OpenLibraryBook {
   cover_i?: number;
   coverUrl?: string;
   cover_edition_key?: string;
-  key: string;
+  key?: string;
   author_key?: string[];
 }

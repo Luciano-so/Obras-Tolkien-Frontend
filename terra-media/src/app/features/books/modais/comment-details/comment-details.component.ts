@@ -8,6 +8,7 @@ import { BooksService } from '../../services/books.service';
 import { ToastService } from '../../../../shared/toast/toast.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ConfirmDialogService } from '../../../../shared/confirm-dialog/confirm-dialog.service';
+import { MatErrorMessagesDirective } from '../../../../shared/directives/matErrorMessagesDirective';
 
 @Component({
   selector: 'app-comment-details',
@@ -18,7 +19,8 @@ import { ConfirmDialogService } from '../../../../shared/confirm-dialog/confirm-
     MatIconModule,
     MatFormFieldModule,
     MatInputModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatErrorMessagesDirective
   ],
   templateUrl: './comment-details.component.html',
   styleUrls: ['./comment-details.component.scss']
@@ -62,8 +64,7 @@ export class CommentDetailsComponent implements OnInit {
         this.close(true);
       },
       error: (err) => {
-        const msg = err?.error?.message || 'Erro ao atualizar comentário';
-        this.toastService.onShowError(msg);
+        this.toastService.onShowError('Erro ao atualizar comentário');
       }
     });
   }

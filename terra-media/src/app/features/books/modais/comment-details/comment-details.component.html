@@ -4,7 +4,10 @@
   </div>
 
   <form [formGroup]="form" class="comment-details-content">
-    <textarea formControlName="comment" class="comment-details-text" rows="8"></textarea>
+    <mat-form-field appearance="fill" class="comment-form-field">
+      <textarea matInput formControlName="comment" placeholder="Digite aqui seu comentário..."></textarea>
+      <mat-error matErrorMessages></mat-error>
+    </mat-form-field>
   </form>
 
   <div class="comment-details-footer">

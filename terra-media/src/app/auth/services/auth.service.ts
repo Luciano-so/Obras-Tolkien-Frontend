@@ -5,15 +5,15 @@ import { Observable, tap } from 'rxjs';
 import { AuthenticateDto } from '../models/authenticate.dto';
 import { environment } from '../../../environments/environment';
 import { LoginResponse } from '../models/login-response';
-import { jwtDecode, JwtPayload } from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 
 interface TokenPayload {
   version: string;
   userId: string;
   userName: string;
-  nbf: number;
-  exp: number;
-  iat: number;
+  nbf?: number;
+  exp?: number;
+  iat?: number;
 }
 
 @Injectable({
@@ -39,11 +39,14 @@ export class AuthService {
     if (!token) return null;
 
     try {
-      return jwtDecode<TokenPayload>(token);
+      return this.decodeToken(token);
     } catch (err) {
       console.error('Erro ao decodificar o token', err);
       return null;
     }
   }
 
+  decodeToken(token: string): TokenPayload {
+    return jwtDecode<TokenPayload>(token);
+  }
 }
