@@ -14,11 +14,11 @@ import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
 import { MatMenuModule } from '@angular/material/menu';
 import { OpenLibraryBook } from '../../models/open-library-book';
-import { BooksService } from '../../services/books.service';
 import { debounceTime, distinctUntilChanged } from 'rxjs';
 import { MatDialog } from '@angular/material/dialog';
 import { AuthorsModalComponent } from '../../modais/author-modal/author-modal.component';
 import { BookModalComponent } from '../../modais/book-modal/book-modal.component';
+import { OpenLibraryService } from '../../services/open-library.service';
 
 
 @Component({
@@ -54,9 +54,9 @@ export class BooksListComponent implements OnInit {
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild(MatSort) sort!: MatSort;
 
-  constructor(private booksService: BooksService) { }
   private fb = inject(FormBuilder);
   private dialog = inject(MatDialog);
+  private openLibrarySrv = inject(OpenLibraryService);
 
   ngOnInit() {
     this.form = this.fb.group({
@@ -85,19 +85,13 @@ export class BooksListComponent implements OnInit {
     }
 
     const search = this.form.get('search')?.value.trim();
-    this.booksService.searchBooks(search, this.currentPage, this.pageSize).subscribe(result => {
+    this.openLibrarySrv.searchBooks(search, this.currentPage, this.pageSize).subscribe(result => {
       this.dataSource.data = result.docs;
       this.totalItems = result.numFound;
       if (this.paginator) {
         this.paginator.length = this.totalItems;
         this.paginator.pageIndex = this.currentPage - 1;
       }
-    });
-  }
-
-  onAuthorPropertiesClick1(authorKey: string) {
-    this.booksService.getAuthorBio(authorKey).subscribe(bio => {
-      console.log(bio);
     });
   }
 
@@ -111,13 +105,13 @@ export class BooksListComponent implements OnInit {
     });
   }
 
-  onBookPropertiesClick(coverId: string[]) {
+  onBookPropertiesClick(book: OpenLibraryBook) {
     this.dialog.open(BookModalComponent, {
-      width: '850px',
+      width: '1200px',
       maxWidth: '100vw',
       maxHeight: '80vh',
       height: '658px',
-      data: coverId
+      data: { book }
     });
   }
 

@@ -1,0 +1,37 @@
+<div class="comments-section">
+  <form [formGroup]="commentForm" (ngSubmit)="submitComment()" class="new-comment-row">
+    <div class="new-comment-title">Novo comentário</div>
+    <mat-form-field appearance="fill" class="comment-form-field">
+      <textarea matInput formControlName="comment" placeholder="Digite aqui seu comentário..."></textarea>
+      <mat-error matErrorMessages></mat-error>
+    </mat-form-field>
+  </form>
+  <div class="comments-list">
+    <div *ngIf="comments.length === 0" class="no-comments-message">
+      Nenhum comentário disponível.
+    </div>
+
+    <div class="comment-card" *ngFor="let comment of comments">
+      <div class="comment-card-row">
+        <div class="comment-info">
+          <div class="comment-author-date">
+            <span class="comment-author">{{ comment.user || 'Anonymous' }}</span>
+            <span class="comment-date">- {{ comment.updatedAt | date:'dd/MM/yyyy - HH:mm' }}</span>
+          </div>
+          <div class="comment-text">
+            {{ comment.comment | slice:0:50 }}{{ comment.comment?.length > 50 ? '...' : '' }}
+          </div>
+
+        </div>
+        <div class="comment-actions">
+          <span *ngIf="comment.isNew" class="comment-new">Novo</span>
+          <button mat-icon-button class="comment-arrow" aria-label="Detalhes do comentário"
+            (click)="openCommentDetails(comment)">
+            <mat-icon>chevron_right</mat-icon>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>

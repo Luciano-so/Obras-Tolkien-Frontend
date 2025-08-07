@@ -1,0 +1,30 @@
+<div class="comment-details-modal">
+  <div class="comment-details-header">
+    <span class="comment-details-title">Comentário</span>
+  </div>
+
+  <form [formGroup]="form" class="comment-details-content">
+    <textarea formControlName="comment" class="comment-details-text" rows="8"></textarea>
+  </form>
+
+  <div class="comment-details-footer">
+    <div class="comment-details-footer-row">
+      <div class="comment-details-user-row">
+        <img src="/assets/avatar.png" alt="avatar" class="comment-details-avatar" />
+        <div class="comment-details-user-info">
+          <span class="comment-details-author">{{ data.comment.user || 'Anonymous' }}</span>
+          <span class="comment-details-date">{{ data.comment.updatedAt | date:'dd/MM/yyyy - HH:mm' }}</span>
+        </div>
+      </div>
+      <div class="comment-details-actions-row">
+        <button mat-flat-button color="primary" class="comment-details-close-btn" (click)="close(false)">Fechar</button>
+        <button mat-flat-button color="accent" class="comment-details-edit-btn" (click)="edit()">
+          Salvar Edição <mat-icon>edit_note</mat-icon>
+        </button>
+        <button mat-flat-button color="warn" class="comment-details-delete-btn" (click)="delete()">
+          Apagar <mat-icon>delete</mat-icon>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

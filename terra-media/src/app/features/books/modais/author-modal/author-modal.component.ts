@@ -2,8 +2,8 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { BooksService } from '../../services/books.service';
 import { MatIconModule } from '@angular/material/icon';
+import { OpenLibraryService } from '../../services/open-library.service';
 
 @Component({
   selector: 'app-authors-modal',
@@ -13,7 +13,7 @@ import { MatIconModule } from '@angular/material/icon';
   styleUrls: ['./author-modal.component.scss']
 })
 export class AuthorsModalComponent implements OnInit {
-  private authorService = inject(BooksService);
+  private openLibrarySrv = inject(OpenLibraryService);
   authorIds: string[] = inject(MAT_DIALOG_DATA);
 
   private dialogRef = inject(MatDialogRef<AuthorsModalComponent>);
@@ -22,7 +22,7 @@ export class AuthorsModalComponent implements OnInit {
 
   ngOnInit(): void {
     this.authorIds.forEach(authorId => {
-      this.authorService.getAuthorBio(authorId).subscribe(response => {
+      this.openLibrarySrv.getAuthorBio(authorId).subscribe(response => {
         this.authors.push(response);
       });
     });

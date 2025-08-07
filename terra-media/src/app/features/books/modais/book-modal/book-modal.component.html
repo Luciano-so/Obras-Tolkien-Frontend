@@ -1,19 +1,30 @@
 <h2 mat-dialog-title class="modal-title">Propriedades do Livro</h2>
-
-<mat-accordion *ngIf="authors.length > 0" class="authors-accordion">
-  <mat-expansion-panel *ngFor="let author of authors; let i = index" [expanded]="authors.length === 1">
-    <mat-expansion-panel-header>
-      <mat-panel-title>{{ author.name }}</mat-panel-title>
-    </mat-expansion-panel-header>
-
-    <div class="author-info">
-      <p class="bio" [innerHTML]="cleanBio(author.bio) || 'Biografia não disponível.'"></p>
+<hr class="modal-divider" />
+<mat-dialog-content class="book-modal-content" *ngIf="book">
+  <div class="book-modal-layout">
+    <nav class="book-modal-menu">
+      <button mat-button [class.active]="selectedTab === 'details'" (click)="selectedTab = 'details'">
+        Detalhes
+      </button>
+      <button mat-button [class.active]="selectedTab === 'comments'" (click)="selectedTab = 'comments'">
+        Comentários
+      </button>
+    </nav>
+    <div class="book-modal-main">
+      <app-book-details *ngIf="selectedTab === 'details'" [book]="book"></app-book-details>
+      <app-book-comments *ngIf="selectedTab === 'comments'" [book]="book"></app-book-comments>
     </div>
-  </mat-expansion-panel>
-</mat-accordion>
-
-<p *ngIf="authors.length === 0" class="no-authors-text">Nenhum autor encontrado.</p>
-
-<button mat-flat-button color="primary" class="close-btn-bottom" (click)="closeModal()">
-  Fechar
-</button>
+  </div>
+</mat-dialog-content>
+<div class="modal-footer">
+  <div class="footer-right-actions">
+    <button mat-flat-button color="primary" class="close-btn-bottom" (click)="closeModal()">
+      <span class="btn-label">Fechar</span>
+    </button>
+    <button *ngIf="selectedTab === 'comments'" mat-flat-button color="accent" class="add-comment-btn"
+      (click)="onAddComment()">
+      <span class="btn-label">Comentar</span>
+      <mat-icon class="btn-icon">add</mat-icon>
+    </button>
+  </div>
+</div>

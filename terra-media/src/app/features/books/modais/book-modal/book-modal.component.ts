@@ -1,45 +1,44 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
-import { BooksService } from '../../services/books.service';
 import { MatIconModule } from '@angular/material/icon';
+import { OpenLibraryBook } from '../../models/open-library-book';
+import { BookDetailsComponent } from '../book-details/book-details.component';
+import { BookCommentsComponent } from '../book-comments/book-comments.component';
 
 @Component({
   selector: 'app-authors-modal',
   standalone: true,
-  imports: [CommonModule, MatDialogModule, MatExpansionModule, MatIconModule],
+  imports: [
+    CommonModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatIconModule,
+    BookDetailsComponent,
+    BookCommentsComponent
+  ],
   templateUrl: './book-modal.component.html',
   styleUrls: ['./book-modal.component.scss']
 })
 export class BookModalComponent implements OnInit {
-  private authorService = inject(BooksService);
-  authorIds: string[] = inject(MAT_DIALOG_DATA);
-
+  @ViewChild(BookCommentsComponent) commentsComponent!: BookCommentsComponent;
   private dialogRef = inject(MatDialogRef<BookModalComponent>);
+  private data = inject<{ book: OpenLibraryBook }>(MAT_DIALOG_DATA);
 
-  authors: any[] = [];
+  book: OpenLibraryBook = this.data.book;
+  selectedTab: 'details' | 'comments' = 'details';
 
   ngOnInit(): void {
-    this.authorIds.forEach(authorId => {
-      this.authorService.getAuthorBio(authorId).subscribe(response => {
-        this.authors.push(response);
-      });
-    });
   }
 
   closeModal(): void {
     this.dialogRef.close();
   }
 
-  cleanBio(bio: string): string {
-    if (!bio) return '';
-    bio = bio.replace(/\(\[Source\]\[\d+\]\)/g, '');
-    const linkMatch = bio.match(/\[\d+\]:\s*(http[^\r\n]+)/);
-    if (linkMatch) {
-      bio = bio.replace(/\[\d+\]:\s*http[^\r\n]+/g, '');
-      bio += `<br><br>Fonte: <a href="${linkMatch[1]}" target="_blank">${linkMatch[1]}</a>`;
+  onAddComment() {
+    if (this.selectedTab === 'comments' && this.commentsComponent) {
+      this.commentsComponent.submitComment();
     }
-    return bio.trim();
   }
 }

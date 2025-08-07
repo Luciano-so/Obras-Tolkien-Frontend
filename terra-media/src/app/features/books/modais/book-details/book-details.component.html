@@ -1,0 +1,10 @@
+<div class="book-details-card">
+  <div class="book-image-info">
+    <img [src]="book.coverUrl" alt="Capa do livro" class="book-cover" />
+    <div class="book-info-left">
+      <div class="book-title">{{ book.title }}</div>
+      <div class="book-author"><b>{{ book.authors }}</b></div>
+      <div class="book-pub">Primeira publicação: {{ book.first_publish_year || 'Ano não disponível' }}</div>
+    </div>
+  </div>
+</div>

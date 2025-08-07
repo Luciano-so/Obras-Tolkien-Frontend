@@ -2,7 +2,6 @@
   <mat-card class="login-card" role="main" aria-label="Formulário de login">
     <form [formGroup]="form" (ngSubmit)="onSubmit()" novalidate>
       <h2>Acesse sua conta</h2>
-
       <mat-form-field appearance="outline" class="full-width">
         <mat-label>Usuário</mat-label>
         <input matInput formControlName="login" id="login" placeholder="Digite seu usuário" autocomplete="login"

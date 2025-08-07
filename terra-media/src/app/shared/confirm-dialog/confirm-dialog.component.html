@@ -1,0 +1,18 @@
+<div class="confirm-dialog-modal">
+  <div class="confirm-dialog-header">
+    <span class="confirm-dialog-title">{{ data.title }}</span>
+    <button mat-icon-button class="close-button" (click)="close(false)">
+      <mat-icon>close</mat-icon>
+    </button>
+  </div>
+  <div class="confirm-dialog-content">
+    <span>{{ data.message }}</span>
+  </div>
+  <div class="confirm-dialog-footer">
+    <button mat-flat-button color="primary" class="confirm-dialog-back-btn" (click)="close(false)">{{ data.cancelText
+      }}</button>
+    <button mat-flat-button [color]="data.color" class="confirm-dialog-confirm-btn" (click)="close(true)">
+      {{ data.confirmText }} <mat-icon *ngIf="data.color === 'warn'">delete</mat-icon>
+    </button>
+  </div>
+</div>
