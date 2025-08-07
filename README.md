@@ -20,7 +20,24 @@
    ```
    Acesse `http://localhost:4200` no navegador.
 
----
+## Testes Unitários
+
+Para rodar os testes unitários e gerar o relatório de cobertura:
+
+```sh
+ng test --code-coverage
+```
+
+Exemplo de cobertura obtida:
+
+```
+=============================== Coverage summary ===============================
+Statements   : 91.98% ( 241/262 )
+Branches     : 79.68% ( 51/64 )
+Functions    : 94.73% ( 72/76 )
+Lines        : 91.39% ( 223/244 )
+================================================================================
+```
 
 ## Críticas e Sugestões de Melhorias
 
