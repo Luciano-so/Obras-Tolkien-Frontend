@@ -1,0 +1,169 @@
+.side-menu {
+  width: 240px;
+  background-color: #FFFFFF;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 16px;
+  box-sizing: border-box;
+  transition: width 0.3s ease;
+  justify-content: flex-start;
+  position: relative;
+  overflow: hidden;
+}
+
+.toggle-btn {
+  align-self: flex-end;
+  margin-bottom: 10px;
+  flex-shrink: 0;
+}
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  flex-shrink: 0;
+}
+
+.logo {
+  max-width: 120px;
+  height: auto;
+}
+
+nav {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding-right: 8px;
+  margin-bottom: 10px;
+  box-sizing: border-box;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+nav ul li {
+  margin-bottom: 10px;
+}
+
+nav ul li a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+  color: #333;
+  padding: 8px;
+  border-radius: 4px;
+  transition: background-color 0.2s ease;
+}
+
+nav ul li a:hover {
+  background-color: #e0e0e0;
+}
+
+nav ul li a mat-icon {
+  font-size: 24px;
+}
+
+.menu-footer {
+  border-top: 1px solid #ddd;
+  padding-top: 10px;
+  flex-shrink: 0;
+}
+
+.menu-footer button.user-button {
+  width: 100%;
+  padding: 8px;
+  text-transform: none;
+  box-sizing: border-box;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 12px;
+}
+
+.user-details-container {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  gap: 12px;
+}
+
+.user-left-group {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  flex-grow: 1;
+}
+
+.user-avatar-wrapper img.user-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.user-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  line-height: 1.1;
+}
+
+.user-name {
+  font-weight: 600;
+  font-size: 14px;
+  color: #222;
+}
+
+.user-subtitle {
+  font-size: 11px;
+  color: #666;
+  margin-top: 2px;
+}
+
+.dropdown-icon {
+  font-size: 20px;
+  color: #666;
+  flex-shrink: 0;
+  margin-left: 60px;
+}
+
+.side-menu.collapsed {
+  width: 80px;
+}
+
+.side-menu.collapsed .menu-footer button.user-button {
+  justify-content: center;
+  gap: 0;
+}
+
+.side-menu.collapsed .menu-footer .user-info,
+.side-menu.collapsed .menu-footer .dropdown-icon {
+  display: none;
+}
+
+.logo-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  gap: 8px
+}
+
+.logo {
+  max-width: 170px;
+  height: auto;
+}
+
+.version {
+  font-size: 12px;
+  color: #777;
+  font-weight: 500;
+  margin-top: 25px;
+}

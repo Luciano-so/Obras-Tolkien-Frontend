@@ -1,0 +1,45 @@
+<div class="side-menu" [class.collapsed]="isCollapsed()">
+  <button mat-icon-button class="toggle-btn" (click)="toggleMenu()">
+    <mat-icon>{{ isCollapsed() ? 'chevron_right' : 'chevron_left' }}</mat-icon>
+  </button>
+  <div class="logo-container" *ngIf="!isCollapsed()">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+    <span class="version">{{version()}}</span>
+  </div>
+
+  <nav>
+    <ul>
+      <li>
+        <a routerLink="/home">
+          <mat-icon>home</mat-icon>
+          <span *ngIf="!isCollapsed()">Início</span>
+        </a>
+      </li>
+      <li>
+        <a routerLink="/book">
+          <mat-icon>library_books</mat-icon>
+          <span *ngIf="!isCollapsed()">Livros</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
+  <div class="menu-footer">
+    <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+      <div class="user-details-container">
+        <div class="user-left-group">
+          <div class="user-avatar-wrapper">
+            <img src="assets/avatar.png" alt="Usuário" class="user-avatar" />
+          </div>
+          <div class="user-info" *ngIf="!isCollapsed()">
+            <span class="user-name">{{ userName() }}</span>
+            <small class="user-subtitle">{{ userSubtitle() }}</small>
+          </div>
+        </div>
+        <mat-icon class="dropdown-icon" *ngIf="!isCollapsed()">keyboard_arrow_down</mat-icon>
+      </div>
+    </button>
+    <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="onLogout()">Sair</button>
+    </mat-menu>
+  </div>
+</div>

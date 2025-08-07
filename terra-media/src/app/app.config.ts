@@ -6,6 +6,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { routes } from './app.routes';
 import { AuthService } from './auth/services/auth.service';
 import { ToastService } from './shared/toast/toast.service';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
+import { AuthInterceptor } from './core/interceptors/auth.interceptor';
 
 const appServices = [
   AuthService,
@@ -19,6 +21,11 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes),
     importProvidersFrom(MatSnackBarModule),
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
     ...appServices
   ]
 };
