@@ -1,34 +1,58 @@
-# Obras Tolkien Frontend
+# 🧙‍♂️ Obras Tolkien – Frontend
 
-## Instruções de Instalação e Execução
+Interface web para visualização e gerenciamento de obras do universo de J.R.R. Tolkien. Projeto desenvolvido com **Angular** e **Angular Material**.
 
-1. **Pré-requisitos:**
+---
 
-   - Node.js (versão recomendada: 18.x ou superior)
-   - Angular CLI (`npm install -g @angular/cli`)
+## 🔐 Usuários de Teste
 
-2. **Instalação:**
+Todos os usuários utilizam a **senha: `123`**
 
-   ```powershell
-   cd terra-media
-   npm install
-   ```
+| Usuário    | Senha |
+|------------|-------|
+| Admin      | 123   |
+| Luciano    | 123   |
+| Teste      | 123   |
+| Joao       | 123   |
 
-3. **Execução:**
-   ```powershell
-   ng serve
-   ```
-   Acesse `http://localhost:4200` no navegador.
+---
 
-## Testes Unitários
+## ⚙️ Instruções de Instalação e Execução
 
-Para rodar os testes unitários e gerar o relatório de cobertura:
+### ✅ Pré-requisitos
 
-```sh
+- Node.js (recomendado: versão 18.x ou superior)
+- Angular CLI:
+  ```bash
+  npm install -g @angular/cli
+  ```
+
+### 📥 Instalação
+
+```bash
+cd terra-media
+npm install
+```
+
+### ▶️ Execução
+
+```bash
+ng serve
+```
+
+Acesse no navegador: [http://localhost:4200](http://localhost:4200)
+
+---
+
+## 🧪 Testes Unitários
+
+Para rodar os testes e gerar relatório de cobertura:
+
+```bash
 ng test --code-coverage
 ```
 
-Exemplo de cobertura obtida:
+### Exemplo de cobertura obtida:
 
 ```
 =============================== Coverage summary ===============================
@@ -39,50 +63,51 @@ Lines        : 91.39% ( 223/244 )
 ================================================================================
 ```
 
-## Execução com Docker
+---
 
-1. **Build da imagem:**
+## 🐳 Execução com Docker
 
-```sh
+### 🏗️ Build da imagem
+
+```bash
 docker build -t terra-media-frontend .
 ```
 
-2. **Rodar o container:**
+### 🚀 Rodar o container
 
-```sh
+```bash
 docker run -p 4200:80 terra-media-frontend
 ```
 
-> O app estará disponível em [http://localhost:4200](http://localhost:4200).
+Acesse: [http://localhost:4200](http://localhost:4200)
 
-## Estrutura do Projeto
+---
+
+## 🗂️ Estrutura do Projeto
 
 - `src/app/features/books`: Funcionalidades relacionadas a livros (modais, detalhes, comentários)
 - `src/app/shared`: Componentes e serviços reutilizáveis (diálogo de confirmação, toasts)
 - `src/assets`: Imagens e arquivos estáticos
 
-## Críticas e Sugestões de Melhorias
+---
 
-    Devido à limitação da API, não foi possível implementar a funcionalidade de ordenação.
+## 💡 Funcionalidades Bônus
 
-    Optei por utilizar exclusivamente componentes do Angular Material, evitando bibliotecas externas. Como resultado, o layout final apresenta diferenças em relação ao design original do Figma.
-
-**Melhorias planejadas:**
-Implementação do cadastro e remoção de usuários.
-Refresh token
-loading
+- ✅ **Diálogo de Confirmação Reutilizável**
+- ✅ **Toast de Notificações**
+- ✅ **Componentização Modular** (modais independentes)
+- ✅ **Testes Automatizados** com ampla cobertura
 
 ---
 
-## Funcionalidades Bônus Implementadas
+## 📌 Limitações e Melhorias Futuras
 
-- **Diálogo de Confirmação Reutilizável:**
-  - Sistema de alert/confirm customizado via serviço e componente compartilhado.
-- **Toast de Notificações:**
-  - Serviço para exibir mensagens de sucesso/erro em tempo real.
-- **Componentização Modular:**
-  - Modais para detalhes, comentários e autores implementados como componentes independentes.
-- **Testes Automatizados:**
-  - Cobertura de testes unitários para todos componentes e serviços principais.
+### ⚠️ Limitações
 
----
+- Devido à limitação da API, não foi possível implementar a **ordenação de dados**.
+
+### 🛠️ Melhorias Planejadas
+
+- Cadastro e remoção de usuários
+- Implementação de **refresh token**
+- Melhorias no **carregamento (loading)**
