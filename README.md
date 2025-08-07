@@ -39,6 +39,28 @@ Lines        : 91.39% ( 223/244 )
 ================================================================================
 ```
 
+## Execução com Docker
+
+1. **Build da imagem:**
+
+```sh
+docker build -t terra-media-frontend .
+```
+
+2. **Rodar o container:**
+
+```sh
+docker run -p 4200:80 terra-media-frontend
+```
+
+> O app estará disponível em [http://localhost:4200](http://localhost:4200).
+
+## Estrutura do Projeto
+
+- `src/app/features/books`: Funcionalidades relacionadas a livros (modais, detalhes, comentários)
+- `src/app/shared`: Componentes e serviços reutilizáveis (diálogo de confirmação, toasts)
+- `src/assets`: Imagens e arquivos estáticos
+
 ## Críticas e Sugestões de Melhorias
 
     Devido à limitação da API, não foi possível implementar a funcionalidade de ordenação.
