@@ -7,11 +7,14 @@
     </mat-form-field>
   </form>
   <div class="comments-list">
-    <div *ngIf="comments.length === 0" class="no-comments-message">
+    @if (comments.length === 0) {
+    <div class="no-comments-message">
       Nenhum comentário disponível.
     </div>
+    }
 
-    <div class="comment-card" *ngFor="let comment of comments">
+    @for (comment of comments; track $index) {
+    <div class="comment-card">
       <div class="comment-card-row">
         <div class="comment-info">
           <div class="comment-author-date">
@@ -21,10 +24,11 @@
           <div class="comment-text">
             {{ comment.comment | slice:0:50 }}{{ comment.comment?.length > 50 ? '...' : '' }}
           </div>
-
         </div>
         <div class="comment-actions">
-          <span *ngIf="comment.isNew" class="comment-new">Novo</span>
+          @if (comment.isNew) {
+          <span class="comment-new">Novo</span>
+          }
           <button mat-icon-button class="comment-arrow" aria-label="Detalhes do comentário"
             (click)="openCommentDetails(comment)">
             <mat-icon>chevron_right</mat-icon>
@@ -32,6 +36,6 @@
         </div>
       </div>
     </div>
+    }
   </div>
-
 </div>

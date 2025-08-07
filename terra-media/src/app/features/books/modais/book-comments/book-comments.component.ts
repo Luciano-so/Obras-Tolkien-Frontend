@@ -26,12 +26,11 @@ import { OpenLibraryBook } from '../../models/open-library-book';
   styleUrls: ['./book-comments.component.scss']
 })
 export class BookCommentsComponent implements OnInit {
-  private dialog = inject(MatDialog);
   @Input() book!: OpenLibraryBook;
-
   private fb = inject(FormBuilder);
-  private booksService = inject(BooksService);
+  private dialog = inject(MatDialog);
   private toastSrv = inject(ToastService);
+  private booksService = inject(BooksService);
 
   commentForm = this.fb.group({
     comment: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(1000)]],

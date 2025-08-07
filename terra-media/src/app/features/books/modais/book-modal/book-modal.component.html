@@ -1,6 +1,7 @@
 <h2 mat-dialog-title class="modal-title">Propriedades do Livro</h2>
 <hr class="modal-divider" />
-<mat-dialog-content class="book-modal-content" *ngIf="book">
+@if (book) {
+<mat-dialog-content class="book-modal-content">
   <div class="book-modal-layout">
     <nav class="book-modal-menu">
       <button mat-button [class.active]="selectedTab === 'details'" (click)="selectedTab = 'details'">
@@ -11,20 +12,27 @@
       </button>
     </nav>
     <div class="book-modal-main">
-      <app-book-details *ngIf="selectedTab === 'details'" [book]="book"></app-book-details>
-      <app-book-comments *ngIf="selectedTab === 'comments'" [book]="book"></app-book-comments>
+      @if (selectedTab === 'details') {
+      <app-book-details [book]="book"></app-book-details>
+      }
+      @if (selectedTab === 'comments') {
+      <app-book-comments [book]="book"></app-book-comments>
+      }
     </div>
   </div>
 </mat-dialog-content>
+}
+
 <div class="modal-footer">
   <div class="footer-right-actions">
     <button mat-flat-button color="primary" class="close-btn-bottom" (click)="closeModal()">
       <span class="btn-label">Fechar</span>
     </button>
-    <button *ngIf="selectedTab === 'comments'" mat-flat-button color="accent" class="add-comment-btn"
-      (click)="onAddComment()">
+    @if (selectedTab === 'comments') {
+    <button mat-flat-button color="accent" class="add-comment-btn" (click)="onAddComment()">
       <span class="btn-label">Comentar</span>
       <mat-icon class="btn-icon">add</mat-icon>
     </button>
+    }
   </div>
 </div>

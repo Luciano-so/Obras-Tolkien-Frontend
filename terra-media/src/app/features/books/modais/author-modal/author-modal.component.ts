@@ -23,7 +23,8 @@ export class AuthorsModalComponent implements OnInit {
   ngOnInit(): void {
     this.authorIds.forEach(authorId => {
       this.openLibrarySrv.getAuthorBio(authorId).subscribe(response => {
-        this.authors.push(response);
+        const authorWithId = { ...response, authorId };
+        this.authors.push(authorWithId);
       });
     });
   }

@@ -16,12 +16,12 @@ export class BooksService {
       .pipe(map(response => response.data ?? null));
   }
 
-  createBookWithComment(coverId: number, commentDto: { comment: string }) {
+  private createBookWithComment(coverId: number, commentDto: { comment: string }) {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/create-with-comment/${coverId}`, commentDto)
       .pipe(map(response => response.data));
   }
 
-  addComment(bookId: string, commentDto: { comment: string }) {
+  private addComment(bookId: string, commentDto: { comment: string }) {
     return this.http.post<ApiResponse<any>>(`${this.apiUrl}/${bookId}/add-comment`, commentDto)
       .pipe(map(response => response.data));
   }
