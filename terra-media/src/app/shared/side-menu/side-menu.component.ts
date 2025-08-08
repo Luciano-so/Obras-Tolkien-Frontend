@@ -43,6 +43,10 @@ export class SideMenuComponent implements OnInit {
     this.router.navigate(['/login']);
   }
 
+  usersRoute(): void {
+    this.router.navigate(['/users']);
+  }
+
   menu(): void {
     this.toastSrv.onShowOk('Logout realizado com sucesso.');
     this.authService.logout();

@@ -9,10 +9,13 @@
     <span>{{ data.message }}</span>
   </div>
   <div class="confirm-dialog-footer">
-    <button mat-flat-button color="primary" class="confirm-dialog-back-btn" (click)="close(false)">{{ data.cancelText
-      }}</button>
+    <button mat-flat-button color="primary" class="confirm-dialog-back-btn" (click)="close(false)">
+      {{ data.cancelText }}</button>
     <button mat-flat-button [color]="data.color" class="confirm-dialog-confirm-btn" (click)="close(true)">
-      {{ data.confirmText }} <mat-icon *ngIf="data.color === 'warn'">delete</mat-icon>
+      {{ data.confirmText }}
+      @if (data.icon) {
+      <mat-icon>{{ data.icon }}</mat-icon>
+      }
     </button>
   </div>
 </div>

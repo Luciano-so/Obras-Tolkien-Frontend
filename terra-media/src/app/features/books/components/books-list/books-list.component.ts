@@ -99,6 +99,7 @@ export class BooksListComponent implements OnInit {
       maxWidth: '100vw',
       maxHeight: '80vh',
       height: '658px',
+      disableClose: true,
       data: authorKeys
     });
   }
@@ -109,6 +110,7 @@ export class BooksListComponent implements OnInit {
       maxWidth: '100vw',
       maxHeight: '80vh',
       height: '658px',
+      disableClose: true,
       data: { book }
     });
   }

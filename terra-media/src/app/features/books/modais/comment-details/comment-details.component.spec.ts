@@ -2,7 +2,7 @@ import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testin
 import { CommentDetailsComponent } from './comment-details.component';
 import { BooksService } from '../../services/books.service';
 import { ToastService } from '../../../../shared/toast/toast.service';
-import { ConfirmDialogService } from '../../../../shared/confirm-dialog/confirm-dialog.service';
+import { ConfirmDialogService } from '../../../../shared/confirm-dialog/services/confirm-dialog.service';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { ReactiveFormsModule } from '@angular/forms';
 import { of, throwError } from 'rxjs';

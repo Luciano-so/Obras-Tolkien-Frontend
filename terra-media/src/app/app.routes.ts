@@ -1,4 +1,3 @@
-// app.routes.ts
 import { Routes } from '@angular/router';
 import { AuthGuard } from './core/guards/auth.guard';
 
@@ -20,6 +19,10 @@ export const routes: Routes = [
       {
         path: 'book',
         loadComponent: () => import('./features/books/components/books-list/books-list.component').then(m => m.BooksListComponent)
+      },
+      {
+        path: 'users',
+        loadComponent: () => import('./features/users/components/users-list/users-list.component').then(m => m.UserListComponent)
       }
     ]
   },

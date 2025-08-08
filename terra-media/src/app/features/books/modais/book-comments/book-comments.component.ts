@@ -69,6 +69,7 @@ export class BookCommentsComponent implements OnInit {
       width: '90vw',
       maxWidth: '900px',
       maxHeight: '80vh',
+      disableClose: true,
       data: { comment }
     });
 

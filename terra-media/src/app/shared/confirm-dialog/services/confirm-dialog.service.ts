@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
-import { ConfirmDialogComponent } from './confirm-dialog.component';
+import { ConfirmDialogComponent } from '../components/confirm-dialog.component';
 
 @Injectable({ providedIn: 'root' })
 export class ConfirmDialogService {
@@ -12,6 +12,7 @@ export class ConfirmDialogService {
     confirmText?: string;
     cancelText?: string;
     color?: string;
+    icon?: string;
   }) {
     return this.dialog.open(ConfirmDialogComponent, {
       data: {
@@ -20,6 +21,7 @@ export class ConfirmDialogService {
         confirmText: options.confirmText || 'Confirmar',
         cancelText: options.cancelText || 'Voltar',
         color: options.color || 'warn',
+        icon: options.icon || null
       },
       disableClose: true
     }).afterClosed();

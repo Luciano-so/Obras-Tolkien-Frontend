@@ -4,6 +4,9 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AuthService } from '../../auth/services/auth.service';
 import { ToastService } from '../toast/toast.service';
 import { By } from '@angular/platform-browser';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
+import { MatButtonModule } from '@angular/material/button';
 
 describe('SideMenuComponent', () => {
   let component: SideMenuComponent;
@@ -16,7 +19,13 @@ describe('SideMenuComponent', () => {
     toastServiceSpy = jasmine.createSpyObj('ToastService', ['onShowOk']);
 
     await TestBed.configureTestingModule({
-      imports: [SideMenuComponent, RouterTestingModule],
+      imports: [
+        SideMenuComponent,
+        RouterTestingModule,
+        MatIconModule,
+        MatMenuModule,
+        MatButtonModule,
+      ],
       providers: [
         { provide: AuthService, useValue: authServiceSpy },
         { provide: ToastService, useValue: toastServiceSpy },
@@ -52,6 +61,18 @@ describe('SideMenuComponent', () => {
     expect(component.isCollapsed()).toBeFalse();
   });
 
+  it('deve mostrar o ícone correto baseado no estado colapsado', () => {
+    component.isCollapsed.set(false);
+    fixture.detectChanges();
+    let icon = fixture.debugElement.query(By.css('.toggle-btn mat-icon'));
+    expect(icon.nativeElement.textContent.trim()).toBe('chevron_left');
+
+    component.isCollapsed.set(true);
+    fixture.detectChanges();
+    icon = fixture.debugElement.query(By.css('.toggle-btn mat-icon'));
+    expect(icon.nativeElement.textContent.trim()).toBe('chevron_right');
+  });
+
   it('deve chamar logout e redirecionar ao clicar em "Sair"', () => {
     spyOn(component['router'], 'navigate');
 
@@ -60,6 +81,14 @@ describe('SideMenuComponent', () => {
     expect(toastServiceSpy.onShowOk).toHaveBeenCalledWith('Logout realizado com sucesso.');
     expect(authServiceSpy.logout).toHaveBeenCalled();
     expect(component['router'].navigate).toHaveBeenCalledWith(['/login']);
+  });
+
+  it('deve navegar para /users ao chamar usersRoute', () => {
+    spyOn(component['router'], 'navigate');
+
+    component.usersRoute();
+
+    expect(component['router'].navigate).toHaveBeenCalledWith(['/users']);
   });
 
   it('deve renderizar o logo e nome do usuário quando não colapsado', () => {

@@ -7,7 +7,7 @@ import { MatInputModule } from '@angular/material/input';
 import { BooksService } from '../../services/books.service';
 import { ToastService } from '../../../../shared/toast/toast.service';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { ConfirmDialogService } from '../../../../shared/confirm-dialog/confirm-dialog.service';
+import { ConfirmDialogService } from '../../../../shared/confirm-dialog/services/confirm-dialog.service';
 import { MatErrorMessagesDirective } from '../../../../shared/directives/matErrorMessagesDirective';
 import { LoadingService } from '../../../../shared/loading/service/loading.service';
 import { finalize } from 'rxjs/operators';

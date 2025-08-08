@@ -8,6 +8,7 @@ export const MESSAGE_DEFAULT: { type: string; message: string }[] = [
   { type: 'maxlength', message: 'O campo deverá conter no máximo {0} caractere(s).' },
   { type: 'max', message: 'O campo deverá conter no máximo {0}.' },
   { type: 'min', message: 'O campo deverá conter no mínimo {0}.' },
+  { type: 'passwordEqual', message: 'Confirmação de senha inválida.' },
 ];
 
 @Directive({

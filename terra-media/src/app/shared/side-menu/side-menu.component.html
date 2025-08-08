@@ -3,10 +3,10 @@
     <mat-icon>@if(isCollapsed()) { chevron_right } @else { chevron_left }</mat-icon>
   </button>
   @if (!isCollapsed()) {
-    <div class="logo-container">
-      <img src="assets/logo.png" alt="Logo" class="logo" />
-      <span class="version">{{version()}}</span>
-    </div>
+  <div class="logo-container">
+    <img src="assets/logo.png" alt="Logo" class="logo" />
+    <span class="version">{{version()}}</span>
+  </div>
   }
 
   <nav>
@@ -15,7 +15,7 @@
         <a routerLink="/home">
           <mat-icon>home</mat-icon>
           @if (!isCollapsed()) {
-            <span>Início</span>
+          <span>Início</span>
           }
         </a>
       </li>
@@ -23,7 +23,7 @@
         <a routerLink="/book">
           <mat-icon>library_books</mat-icon>
           @if (!isCollapsed()) {
-            <span>Livros</span>
+          <span>Livros</span>
           }
         </a>
       </li>
@@ -37,18 +37,19 @@
             <img src="assets/avatar.png" alt="Usuário" class="user-avatar" />
           </div>
           @if (!isCollapsed()) {
-            <div class="user-info">
-              <span class="user-name">{{ userName() }}</span>
-              <small class="user-subtitle">{{ userSubtitle() }}</small>
-            </div>
+          <div class="user-info">
+            <span class="user-name">{{ userName() }}</span>
+            <small class="user-subtitle">{{ userSubtitle() }}</small>
+          </div>
           }
         </div>
         @if (!isCollapsed()) {
-          <mat-icon class="dropdown-icon">keyboard_arrow_down</mat-icon>
+        <mat-icon class="dropdown-icon">keyboard_arrow_down</mat-icon>
         }
       </div>
     </button>
     <mat-menu #userMenu="matMenu">
+      <button mat-menu-item (click)="usersRoute()">Usuarios</button>
       <button mat-menu-item (click)="onLogout()">Sair</button>
     </mat-menu>
   </div>

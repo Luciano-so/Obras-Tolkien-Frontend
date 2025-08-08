@@ -1,0 +1,39 @@
+<h2 class="modal-title">Criar novo usuário</h2>
+
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="form-container">
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Nome</mat-label>
+    <input matInput formControlName="name" autocomplete="off" />
+    <mat-error matErrorMessages></mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Login</mat-label>
+    <input matInput formControlName="login" autocomplete="off" />
+    <mat-error matErrorMessages></mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Senha</mat-label>
+    <input matInput type="password" formControlName="password" autocomplete="off" />
+    <mat-error matErrorMessages></mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill" class="full-width">
+    <mat-label>Confirmar senha</mat-label>
+    <input matInput type="password" formControlName="confirmPassword" autocomplete="off" />
+    <mat-error matErrorMessages></mat-error>
+  </mat-form-field>
+
+  <div class="modal-footer">
+    <div class="footer-right-actions">
+      <button mat-flat-button color="primary" class="close-btn-bottom" type="button" (click)="onCancel()">
+        <span class="btn-label">Fechar</span>
+      </button>
+      <button mat-flat-button color="accent" type="submit" [disabled]="form.invalid" class="add-confirm-btn">
+        <span class="btn-label">Cadastrar</span>
+      </button>
+    </div>
+  </div>
+</form>
