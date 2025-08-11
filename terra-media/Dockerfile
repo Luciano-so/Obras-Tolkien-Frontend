@@ -7,12 +7,12 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm run build 
+RUN npm run build
 
 # Serve stage
 FROM nginx:alpine
 
-COPY --from=build /app/dist/terra-media /usr/share/nginx/html
+COPY --from=build /app/dist/terra-media/browser /usr/share/nginx/html
 
 EXPOSE 80
 
